@@ -1,0 +1,68 @@
+import { Project } from '@/lib/types';
+
+export const projects: Project[] = [
+    {
+        id: 'ecommerce-platform',
+        title: 'E-Commerce Platform',
+        description: 'Modern e-commerce solution with real-time inventory and payment processing.',
+        category: 'Web',
+        thumbnail: '/images/projects/ecommerce.jpg',
+        tags: ['Next.js', 'Stripe', 'PostgreSQL'],
+    },
+    {
+        id: 'fitness-app',
+        title: 'Fitness Tracking App',
+        description: 'Mobile app for tracking workouts, nutrition, and fitness goals.',
+        category: 'Mobile',
+        thumbnail: '/images/projects/fitness.jpg',
+        tags: ['React Native', 'Firebase', 'HealthKit'],
+    },
+    {
+        id: 'saas-dashboard',
+        title: 'SaaS Analytics Dashboard',
+        description: 'Comprehensive analytics dashboard for SaaS businesses.',
+        category: 'Web',
+        thumbnail: '/images/projects/dashboard.jpg',
+        tags: ['React', 'D3.js', 'Node.js'],
+    },
+    {
+        id: 'brand-identity',
+        title: 'Tech Startup Branding',
+        description: 'Complete brand identity design for an AI startup.',
+        category: 'Branding',
+        thumbnail: '/images/projects/branding.jpg',
+        tags: ['Logo Design', 'Brand Guidelines', 'Marketing Materials'],
+    },
+    {
+        id: 'banking-app',
+        title: 'Digital Banking App',
+        description: 'Secure mobile banking application with biometric authentication.',
+        category: 'Mobile',
+        thumbnail: '/images/projects/banking.jpg',
+        tags: ['Flutter', 'Biometrics', 'Encryption'],
+    },
+    {
+        id: 'portfolio-redesign',
+        title: 'Creative Portfolio',
+        description: 'Interactive portfolio website for a design agency.',
+        category: 'Design',
+        thumbnail: '/images/projects/portfolio.jpg',
+        tags: ['Figma', 'Webflow', 'Animation'],
+    },
+    {
+        id: 'food-delivery',
+        title: 'Food Delivery Platform',
+        description: 'Multi-vendor food delivery platform with real-time tracking.',
+        category: 'Web',
+        thumbnail: '/images/projects/food-delivery.jpg',
+        tags: ['Next.js', 'Maps API', 'WebSocket'],
+    },
+    {
+        id: 'healthcare-app',
+        title: 'Telemedicine App',
+        description: 'HIPAA-compliant telemedicine platform for remote consultations.',
+        category: 'Mobile',
+        thumbnail: '/images/projects/healthcare.jpg',
+        tags: ['React Native', 'WebRTC', 'HIPAA'],
+    },
+];
