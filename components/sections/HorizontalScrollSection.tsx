@@ -9,7 +9,7 @@ import { cn } from '@/lib/utils';
 
 function IntroPanel() {
     return (
-        <div className="flex h-full min-w-full flex-col items-center justify-center bg-white px-6 lg:px-16">
+        <div className="flex h-full w-full lg:min-w-full flex-shrink-0 flex-col items-center justify-center bg-white px-6 lg:px-16">
             <div className="max-w-2xl text-center">
                 <motion.h2
                     initial={{ opacity: 0, y: 30 }}
@@ -53,48 +53,65 @@ function IntroPanel() {
 
 function ProcessPanel() {
     return (
-        <div className="flex h-full min-w-full flex-col items-center justify-center bg-sky-50 px-6 lg:px-16">
-            <div className="max-w-4xl">
+        <div className="flex h-full w-full lg:min-w-full flex-shrink-0 flex-col items-center justify-center bg-sky-50 px-4 py-6 lg:px-8 lg:py-8">
+            <div className="max-w-4xl w-full">
                 <motion.h2
                     initial={{ opacity: 0, y: 30 }}
                     whileInView={{ opacity: 1, y: 0 }}
                     viewport={{ once: true }}
                     transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
-                    className="mb-12 text-center font-serif text-4xl font-bold text-gray-900 md:text-5xl"
+                    className="mb-4 text-center font-serif text-2xl font-bold text-gray-900 md:text-3xl"
                 >
                     Our Process
                 </motion.h2>
 
                 <div className="relative">
-                    {/* Connection Line */}
-                    <div className="absolute left-8 top-0 hidden h-full w-0.5 bg-sky-200 lg:block" />
+                    {/* Connection Line - Center on desktop, left on mobile */}
+                    <div className="absolute left-5 md:left-1/2 md:-translate-x-1/2 top-0 h-full w-0.5 bg-sky-200" />
 
                     {/* Process Steps */}
-                    <div className="space-y-8">
+                    <div className="space-y-3">
                         {processSteps.map((step, index) => (
                             <motion.div
                                 key={step.id}
-                                initial={{ opacity: 0, x: -30 }}
-                                whileInView={{ opacity: 1, x: 0 }}
+                                initial={{ opacity: 0, y: 20 }}
+                                whileInView={{ opacity: 1, y: 0 }}
                                 viewport={{ once: true }}
                                 transition={{
-                                    duration: 0.6,
-                                    delay: index * 0.1,
+                                    duration: 0.5,
+                                    delay: index * 0.08,
                                     ease: [0.16, 1, 0.3, 1],
                                 }}
-                                className="group relative flex items-start gap-6"
+                                className="group relative flex items-start gap-4 md:grid md:grid-cols-[1fr_auto_1fr] md:gap-x-6 md:items-center"
                             >
-                                {/* Step Badge */}
-                                <div className="relative z-10 flex h-16 w-16 flex-shrink-0 items-center justify-center rounded-full bg-white text-xl font-bold text-sky-600 shadow-lg ring-4 ring-sky-100 transition-all duration-300 group-hover:scale-110 group-hover:bg-sky-500 group-hover:text-white group-hover:shadow-xl">
+                                {/* Column 1: Left Content (desktop only, for Step 2 & 4) */}
+                                <div className="hidden md:block md:text-right">
+                                    {index % 2 !== 0 && (
+                                        <div className="rounded-xl bg-white p-3 md:p-3.5 shadow-sm transition-all duration-300 group-hover:shadow-md">
+                                            <h3 className="mb-0.5 font-serif text-base md:text-lg font-bold text-gray-900">
+                                                {step.title}
+                                            </h3>
+                                            <p className="text-xs md:text-sm text-gray-600">{step.description}</p>
+                                        </div>
+                                    )}
+                                </div>
+
+                                {/* Column 2: Step Badge (aligned center on desktop) */}
+                                <div className="relative z-10 flex h-10 w-10 md:h-12 md:w-12 flex-shrink-0 items-center justify-center rounded-full bg-white text-base md:text-lg font-bold text-sky-600 shadow-md ring-2 ring-sky-100 transition-all duration-300 group-hover:scale-110 group-hover:bg-sky-500 group-hover:text-white group-hover:shadow-lg md:mx-auto">
                                     {step.id}
                                 </div>
 
-                                {/* Step Content */}
-                                <div className="flex-1 rounded-2xl bg-white p-6 shadow-sm transition-all duration-300 group-hover:shadow-lg">
-                                    <h3 className="mb-2 font-serif text-2xl font-bold text-gray-900">
-                                        {step.title}
-                                    </h3>
-                                    <p className="text-gray-600">{step.description}</p>
+                                {/* Column 3: Right Content (always visible on mobile, Step 1, 3, 5 on desktop) */}
+                                <div className="flex-1 md:flex-none">
+                                    <div className={cn(
+                                        "rounded-xl bg-white p-3 md:p-3.5 shadow-sm transition-all duration-300 group-hover:shadow-md",
+                                        index % 2 !== 0 && "md:hidden"
+                                    )}>
+                                        <h3 className="mb-0.5 font-serif text-base md:text-lg font-bold text-gray-900">
+                                            {step.title}
+                                        </h3>
+                                        <p className="text-xs md:text-sm text-gray-600">{step.description}</p>
+                                    </div>
                                 </div>
                             </motion.div>
                         ))}
@@ -107,7 +124,7 @@ function ProcessPanel() {
 
 function PricingPanel() {
     return (
-        <div className="flex h-full min-w-full flex-col items-center justify-center bg-white px-6 py-16 lg:px-16">
+        <div className="flex h-full w-full lg:min-w-full flex-shrink-0 flex-col items-center justify-center bg-white px-6 py-16 lg:px-16">
             <div className="max-w-6xl">
                 <motion.h2
                     initial={{ opacity: 0, y: 30 }}
@@ -207,14 +224,13 @@ export function HorizontalScrollSection() {
     const { scrollYProgress } = useScroll({
         target: targetRef,
         offset: ['start start', 'end end'],
-        layoutEffect: false, // Suppress position warning
     });
 
     // Transform for 3 panels: 0% -> -200% (to show all 3 panels)
     const x = useTransform(scrollYProgress, [0, 1], ['0%', '-200%']);
 
     return (
-        <>
+        <section id="process">
             {/* Desktop: Horizontal Scroll */}
             <div ref={targetRef} className="relative hidden h-[300vh] lg:block">
                 <div className="sticky top-0 h-screen overflow-hidden">
@@ -227,7 +243,7 @@ export function HorizontalScrollSection() {
             </div>
 
             {/* Mobile: Vertical Stack */}
-            <div className="lg:hidden">
+            <div className="lg:hidden w-full overflow-hidden">
                 <div className="min-h-screen">
                     <IntroPanel />
                 </div>
@@ -238,6 +254,6 @@ export function HorizontalScrollSection() {
                     <PricingPanel />
                 </div>
             </div>
-        </>
+        </section>
     );
 }

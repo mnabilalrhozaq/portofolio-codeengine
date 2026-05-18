@@ -34,7 +34,7 @@ export function HeroSection() {
     };
 
     return (
-        <section className="relative flex min-h-screen items-center justify-center overflow-hidden bg-gradient-to-br from-sky-50 via-white to-sky-100">
+        <section id="about" className="relative flex min-h-screen items-center justify-center overflow-hidden bg-gradient-to-br from-sky-50 via-white to-sky-100">
             {/* Three.js Background - Lazy loaded */}
             <Suspense fallback={null}>
                 <ThreeBackground />
@@ -93,7 +93,7 @@ export function HeroSection() {
                                         contactSection.scrollIntoView({ behavior: 'smooth' });
                                     }
                                 }}
-                                className="rounded-full bg-sky-500 px-8 py-4 text-base font-semibold text-white shadow-xl shadow-sky-500/30 transition-all duration-300 hover:-translate-y-1 hover:bg-sky-600 hover:shadow-2xl hover:shadow-sky-500/40"
+                                className="rounded-lg bg-sky-500 px-8 py-4 text-base font-semibold text-white shadow-xl shadow-sky-500/30 transition-all duration-300 hover:-translate-y-1 hover:bg-sky-600 hover:shadow-2xl hover:shadow-sky-500/40"
                             >
                                 Start Your Project
                             </button>
@@ -104,7 +104,7 @@ export function HeroSection() {
                                         portfolioSection.scrollIntoView({ behavior: 'smooth' });
                                     }
                                 }}
-                                className="rounded-full border-2 border-sky-500 bg-white px-8 py-4 text-base font-semibold text-sky-600 transition-all duration-300 hover:-translate-y-1 hover:bg-sky-50"
+                                className="rounded-lg border-2 border-sky-500 bg-white px-8 py-4 text-base font-semibold text-sky-600 transition-all duration-300 hover:-translate-y-1 hover:bg-sky-50"
                             >
                                 View Our Work
                             </button>
@@ -116,7 +116,7 @@ export function HeroSection() {
                             initial="hidden"
                             animate="visible"
                             variants={fadeUpVariants}
-                            className="mt-16 flex flex-wrap items-center justify-center gap-x-12 gap-y-8"
+                            className="mt-16 flex items-center justify-center gap-x-8 gap-y-4 flex-wrap sm:gap-x-12"
                         >
                             <div className="text-center">
                                 <div className="font-serif text-4xl font-bold text-sky-600">150+</div>

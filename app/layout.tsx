@@ -2,11 +2,9 @@ import type { Metadata } from 'next';
 import { DM_Sans, Playfair_Display } from 'next/font/google';
 import './globals.css';
 import { SITE_CONFIG } from '@/lib/constants';
-import { SmoothScrollProvider } from '@/components/SmoothScrollProvider';
-import { CustomCursor } from '@/components/CustomCursor';
 import { LoadingAnimation } from '@/components/LoadingAnimation';
-import { Navbar } from '@/components/Navbar';
 import { ErrorSuppressor } from '@/components/ErrorSuppressor';
+import { ClientProviders } from '@/components/ClientProviders';
 
 const dmSans = DM_Sans({
   variable: '--font-dm-sans',
@@ -114,12 +112,10 @@ export default function RootLayout({
       </head>
       <body className="antialiased">
         <ErrorSuppressor />
-        <SmoothScrollProvider>
-          <LoadingAnimation />
-          <CustomCursor />
-          <Navbar />
+        <LoadingAnimation />
+        <ClientProviders>
           {children}
-        </SmoothScrollProvider>
+        </ClientProviders>
       </body>
     </html>
   );

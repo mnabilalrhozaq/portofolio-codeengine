@@ -1,145 +1,51 @@
 'use client';
 
-import { useRef, useMemo, useEffect, useState } from 'react';
-import { Canvas, useFrame } from '@react-three/fiber';
-import { Float, Sphere, MeshDistortMaterial } from '@react-three/drei';
-import * as THREE from 'three';
-
-function FloatingShape({ position, color, speed }: { position: [number, number, number]; color: string; speed: number }) {
-    const meshRef = useRef<THREE.Mesh>(null);
-
-    return (
-        <Float speed={speed} rotationIntensity={0.3} floatIntensity={0.3}>
-            <Sphere ref={meshRef} args={[1, 16, 16]} position={position}>
-                <MeshDistortMaterial
-                    color={color}
-                    attach="material"
-                    distort={0.2}
-                    speed={1.5}
-                    roughness={0.4}
-                />
-            </Sphere>
-        </Float>
-    );
-}
-
-function ParticleField() {
-    const particlesRef = useRef<THREE.Points>(null);
-    const [isVisible, setIsVisible] = useState(true);
-
-    const particlesGeometry = useMemo(() => {
-        const count = 200; // Reduced from 300 for better performance
-        const positions = new Float32Array(count * 3);
-
-        for (let i = 0; i < count * 3; i++) {
-            positions[i] = (Math.random() - 0.5) * 20;
-        }
-
-        return positions;
-    }, []);
-
-    useFrame((state) => {
-        if (particlesRef.current && isVisible) {
-            // Slower rotation for smoother performance
-            particlesRef.current.rotation.y = state.clock.elapsedTime * 0.03;
-        }
-    });
-
-    // Pause animation when tab is not visible
-    useEffect(() => {
-        const handleVisibilityChange = () => {
-            setIsVisible(!document.hidden);
-        };
-
-        document.addEventListener('visibilitychange', handleVisibilityChange);
-        return () => document.removeEventListener('visibilitychange', handleVisibilityChange);
-    }, []);
-
-    return (
-        <points ref={particlesRef}>
-            <bufferGeometry>
-                <bufferAttribute
-                    attach="attributes-position"
-                    count={particlesGeometry.length / 3}
-                    array={particlesGeometry}
-                    itemSize={3}
-                    args={[particlesGeometry, 3]}
-                />
-            </bufferGeometry>
-            <pointsMaterial
-                size={0.05}
-                color="#38bdf8"
-                sizeAttenuation
-                transparent
-                opacity={0.6}
-            />
-        </points>
-    );
-}
-
-function Scene() {
-    return (
-        <>
-            <ambientLight intensity={0.5} />
-            <directionalLight position={[10, 10, 5]} intensity={1} />
-            <pointLight position={[-10, -10, -5]} intensity={0.5} color="#38bdf8" />
-
-            {/* Floating shapes - Reduced polygon count */}
-            <FloatingShape position={[-3, 2, -2]} color="#0ea5e9" speed={1.2} />
-            <FloatingShape position={[3, -1, -3]} color="#38bdf8" speed={1.0} />
-            <FloatingShape position={[0, 3, -4]} color="#0284c7" speed={1.5} />
-
-            {/* Particle field */}
-            <ParticleField />
-        </>
-    );
-}
+import { useEffect, useState } from 'react';
 
 export function ThreeBackground() {
-    const [isMobile, setIsMobile] = useState(false);
-    const [shouldRender, setShouldRender] = useState(false);
+    const [mounted, setMounted] = useState(false);
 
     useEffect(() => {
-        // Detect mobile devices
-        const checkMobile = () => {
-            setIsMobile(window.innerWidth < 768);
-        };
-
-        checkMobile();
-        window.addEventListener('resize', checkMobile);
-
-        // Delay rendering to prioritize initial page load
-        const timer = setTimeout(() => {
-            setShouldRender(true);
-        }, 100);
-
-        return () => {
-            window.removeEventListener('resize', checkMobile);
-            clearTimeout(timer);
-        };
+        setMounted(true);
     }, []);
 
-    if (!shouldRender) {
+    if (!mounted) {
         return <div className="absolute inset-0 -z-10 bg-gradient-to-br from-sky-50 via-white to-sky-100" />;
     }
 
     return (
-        <div className="absolute inset-0 -z-10">
-            <Canvas
-                camera={{ position: [0, 0, 8], fov: 75 }}
-                dpr={isMobile ? [0.5, 1] : [1, 1.5]} // Lower DPR for better performance
-                performance={{ min: 0.5 }}
-                frameloop="demand" // Only render when needed
-                gl={{
-                    antialias: false, // Disable for better performance
-                    powerPreference: 'high-performance',
-                    alpha: true,
-                    stencil: false,
-                    depth: true,
+        <div className="absolute inset-0 -z-10 overflow-hidden bg-gradient-to-br from-sky-50 via-white to-sky-100">
+            {/* Decorative Elements - Similar to sampulkreativ.id */}
+
+            {/* Large Circle Top Right */}
+            <div className="absolute -right-20 -top-20 h-80 w-80 rounded-full bg-sky-200/20 blur-3xl" />
+
+            {/* Medium Circle Bottom Left */}
+            <div className="absolute -bottom-32 -left-32 h-96 w-96 rounded-full bg-sky-300/15 blur-3xl" />
+
+            {/* Small Circle Center */}
+            <div className="absolute left-1/3 top-1/2 h-64 w-64 rounded-full bg-sky-100/30 blur-2xl" />
+
+            {/* Floating Dots Pattern */}
+            <div className="absolute inset-0 opacity-30">
+                <div className="absolute left-[10%] top-[20%] h-2 w-2 rounded-full bg-sky-400 animate-pulse" style={{ animationDelay: '0s', animationDuration: '3s' }} />
+                <div className="absolute left-[80%] top-[30%] h-3 w-3 rounded-full bg-sky-500 animate-pulse" style={{ animationDelay: '1s', animationDuration: '4s' }} />
+                <div className="absolute left-[60%] top-[70%] h-2 w-2 rounded-full bg-sky-300 animate-pulse" style={{ animationDelay: '2s', animationDuration: '3.5s' }} />
+                <div className="absolute left-[20%] top-[80%] h-3 w-3 rounded-full bg-sky-400 animate-pulse" style={{ animationDelay: '0.5s', animationDuration: '4.5s' }} />
+                <div className="absolute left-[90%] top-[60%] h-2 w-2 rounded-full bg-sky-500 animate-pulse" style={{ animationDelay: '1.5s', animationDuration: '3s' }} />
+            </div>
+
+            {/* Grid Pattern Overlay */}
+            <div
+                className="absolute inset-0 opacity-[0.03]"
+                style={{
+                    backgroundImage: `
+                        linear-gradient(to right, #0ea5e9 1px, transparent 1px),
+                        linear-gradient(to bottom, #0ea5e9 1px, transparent 1px)
+                    `,
+                    backgroundSize: '60px 60px'
                 }}
-            >
-                <Scene />
-            </Canvas>
+            />
         </div>
     );
 }

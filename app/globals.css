@@ -208,11 +208,7 @@ img {
   content-visibility: auto;
 }
 
-/* Optimize heavy sections */
-section {
-  content-visibility: auto;
-  contain-intrinsic-size: 0 500px;
-}
+
 
 /* Reduce paint on scroll */
 .sticky {
